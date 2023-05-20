@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#root{
+}
+
+.App{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.board{
+    width: 800px;
+    height: 800px;
+    background-color: darkorange;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.testing{
+    width: 800px;
+    height: 400px;
+    background-color: aquamarine;
+}
+
+.Tile{
+    width: 12.5%;
+    height: 12.5%;
+}
+
+.markedRook{
+    box-sizing: border-box;
+    border: 5px solid greenyellow;
+}
+
+.markedQueen{
+    box-sizing: border-box;
+    border: 5px solid greenyellow;
+}
+
+.rookAttackZone{
+    box-sizing: border-box;
+    border: 5px solid;
+    border-color: #ff0000 floralwhite floralwhite floralwhite;
+}
