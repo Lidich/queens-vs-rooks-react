@@ -12,6 +12,22 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
+
+    background-image: url("../../public/img/backImage1.jpg");
+    background-position: 100% 100%;
+}
+
+.boardComponent{
+    display: flex;
+    width: 1250px;
+    height: 800px;
+    flex-wrap: wrap;
+}
+
+.testing{
+    width: 400px;
+    height: 400px;
+    background-color: aquamarine;
 }
 
 .board{
@@ -22,11 +38,89 @@
     flex-wrap: wrap;
 }
 
-.testing{
-    width: 800px;
-    height: 400px;
-    background-color: aquamarine;
+.board-left{
+    height: 790px;
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 5px solid transparent;
+    border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+    border-image-slice: 1;
+    //border-right: none;
+
+    background-color: snow;
 }
+
+.whiteMoveFlagIS0{
+    visibility: visible;
+}
+
+.whiteMoveFlagIS1{
+    visibility: hidden;
+}
+
+.whiteMoveFlagIS2{
+    visibility: hidden;
+}
+
+.board-left-tile{
+    height: 12.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    box-sizing: border-box;
+    border-bottom: 3px solid;
+
+    font-family: "Comic Sans MS";
+    font-style: italic;
+    font-weight: bold;
+}
+
+.board-bottom-corner{
+    width: 30px;
+    box-sizing: border-box;
+    border: 5px solid;
+    border-color: darkgray;
+    background-color: black;
+}
+
+.board-bottom{
+    width: 804px;
+    height: 33px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+
+    margin-top: 0;
+    box-sizing: border-box;
+    border: 5px solid transparent;
+    //border-tope: none;
+    border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+    border-image-slice: 1;
+
+    background-color: snow;
+}
+
+.board-bottom-tile{
+    width: 12.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+
+    box-sizing: border-box;
+    border-left: 3px solid;
+    font-family: "Comic Sans MS";
+    font-style: italic;
+    font-weight: bold;
+}
+
+
 
 .Tile{
     width: 12.5%;
@@ -45,6 +139,31 @@
 
 .rookAttackZone{
     box-sizing: border-box;
-    border: 5px solid;
-    border-color: #ff0000 floralwhite floralwhite floralwhite;
+    border-top: 5px solid;
+    border-top-color: black;
 }
+
+.firstRookMoveZone{
+    box-sizing: border-box;
+    border-left: 5px solid;
+    border-left-color: blue;
+}
+
+.secondRookMoveZone{
+    box-sizing: border-box;
+    border-right: 5px solid;
+    border-right-color: deeppink;
+}
+
+.queenMoveZone{
+    box-sizing: border-box;
+    border-bottom: 5px solid;
+    border-bottom-color: greenyellow;
+}
+
+.obstacle{
+    //box-sizing: border-box;
+    //border: 5px solid black;
+}
+
+
