@@ -12,8 +12,6 @@ const Tile = (props) => {
             if(value===true) className+=" "+key;
         }
         return(className)
-        //tile.zones.forEach(element =>
-       // if(element===true) className+=" "+)
     }
 
     if (props.value === "queen")
@@ -53,11 +51,8 @@ const Tile = (props) => {
             </div>)
         return (
             <div className={generateClassName()} style={{backgroundColor: props.color}} id={props.id}>
-                <span>{props.id}</span>
             </div>
         );
 };
 
-
-//<img src='./img/queen.png' width={"80%"} height={"80%"} alt={""}/>
 export default Tile;

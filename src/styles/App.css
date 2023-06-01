@@ -13,8 +13,9 @@
     width: 100vw;
     height: 100vh;
 
-    background-image: url("../../public/img/backImage1.jpg");
-    background-position: 100% 100%;
+    background-color: darkgray;
+    //background-image: url("../../public/img/backImage1.jpg");
+    //background-position: 100% 100%;
 }
 
 .boardComponent{
@@ -26,8 +27,9 @@
 
 .testing{
     width: 400px;
-    height: 400px;
+    height: 500px;
     background-color: aquamarine;
+    border: 1px solid black;
 }
 
 .board{
@@ -125,6 +127,9 @@
 .Tile{
     width: 12.5%;
     height: 12.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .markedRook{

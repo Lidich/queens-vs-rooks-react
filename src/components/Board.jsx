@@ -142,7 +142,7 @@ const Board = () => {
     const [endGameFlag, setEndgameFlag] = useState(0)
 
     //number of obstacles
-    const n = 22
+    const n = 10
 
     class IdClass{
         id = ''
@@ -331,10 +331,6 @@ const Board = () => {
     }
 
     function copyBoard(board){
-        /*
-        chessBoardCopy.map((tile) =>
-            ({...tile, content: chessBoard[boardIdMap.get(tile.id)].content}))
-         */
         if(board.length>2){
             for(let i=0;i<64;i++){
                 board[i] = {id: chessBoard[i].id, content: chessBoard[i].content, zones: {...chessBoard[i].zones}}
@@ -402,48 +398,19 @@ const Board = () => {
         chessBoardShuffleSlice = chessBoardShuffle.slice(0, n);
 
         for(let i=0;i<chessBoardShuffleSlice.length;i++){
-            //chessBoard[boardIdMap.get(chessBoardShuffleSlice[i].id)]=chessBoardShuffleSlice[i];
             board[boardIdMap.get(chessBoardShuffleSlice[i].id)]=chessBoardShuffleSlice[i];
         }
-
-        //editBoard(prevState => [...prevState])
     }
-
-    /*
-    function updateBoardSingle(idSearch, newContent) {
-        editBoard(prevState => [...prevState.map((tile) =>
-                tile.id === idSearch
-                    ? {...tile, content: newContent}
-                    : {...tile}
-            )]
-        );
-    }
-
-     */
 
     function updateBoardSingle(idSearch, newContent, board) {
       board[boardIdMap.get(idSearch)].content = newContent
     }
 
-    /*
-    function movePiece(newPosId, grabbedPieceType) {
-        let initialType = grabbedPieceType
-        if (initialType !== Pieces.None) {
-            if (initialType === Pieces.Queen) setQueenPosId(grabbedPiece.posId);
-            updateBoardSingle(newPosId, initialType);
-            updateBoardSingle(grabbedPiece.posId, Pieces.Obstacle)
-            grabPiece({type: Pieces.None, posId: "none"})
-        }
-    }
-     */
-
     function movePiece(newPosId, grabbedPieceType, grabbedPieceId, board) {
         let initialType = grabbedPieceType
         if (initialType !== Pieces.None) {
-            //if (initialType === Pieces.Queen) setQueenPosId(grabbedPiece.posId);
             updateBoardSingle(newPosId, initialType, board);
             updateBoardSingle(grabbedPieceId, Pieces.Obstacle, board)
-            //grabPiece({type: Pieces.None, posId: "none"})
         }
     }
 
@@ -914,7 +881,6 @@ const Board = () => {
             editBoard(prevState => [...prevState])
         }
 
-        //(getItemFromBoard(id, board).content===Pieces.Queen)
         //queenWays
         else{
             let FRIDclass = new IdClass(FRID)
@@ -1339,7 +1305,6 @@ const Board = () => {
                     }
                 }
             }
-            //editBoard(prevState => [...prevState])
 
             if(!rookProtectFlag) {
                 markRook(FRID, board)
@@ -1349,18 +1314,6 @@ const Board = () => {
         return(moveZones)
     }
 
-    /*
-    function clearWays() {
-        editBoard(prevState => [...prevState.map((tile) =>
-                tile.content === Pieces.Dot
-                    ? {...tile, content: Pieces.None}
-                    : {...tile}
-            )]
-        );
-    }
-
-     */
-
     function clearWays(board) {
         for(let i=0;i<64;i++){
             if(board[i].content===Pieces.MarkedRook) board[i].content = Pieces.Rook
@@ -1368,18 +1321,6 @@ const Board = () => {
             if(board[i].content===Pieces.Dot) board[i].content = Pieces.None
         }
     }
-
-    /*
-    function clearRookWays() {
-        editBoard(prevState => [...prevState.map((tile) =>
-                tile.content === Pieces.RookAttackZone
-                    ? {...tile, content: Pieces.None}
-                    : {...tile}
-            )]
-        );
-    }
-
-     */
 
     function clearRookWays(board) {
         for(let i=0;i<64;i++){
@@ -1392,7 +1333,7 @@ const Board = () => {
     function drawEndBlock(){
         if(endGameFlag===1) return(<div><img src='./img/queen.png' width={"40px"} height={"40px"} alt={""}/> pobeda {endGameFlag}</div>)
         if(endGameFlag===2) return (<div><img src='./img/rook.png' width={"40px"} height={"40px"} alt={""}/> pobeda {endGameFlag}</div>)
-        else return (<div>vuz {endGameFlag}</div>)
+        else return (<div>nothing {endGameFlag}</div>)
     }
 
     function updateBoardFromCopy(board) {
@@ -1416,8 +1357,6 @@ const Board = () => {
     function calcMoveZone(pieceId, boardCopy, queenID, firstRookID, secondRookID){
         let moveZonesIds = []
         let newMoveZonesIds = []
-
-        //copyBoard(boardCopy)
 
         if((pieceId===firstRookID)||(pieceId===secondRookID)){
             let tempRookId = new IdClass(pieceId)
@@ -1857,7 +1796,6 @@ const Board = () => {
         }
         if(bestMove.initialRookId===tempFRID) tempFRID = bestMove.bestMove
         else tempSRID = bestMove.bestMove
-        console.log(bestMove)
         movePiece(bestMove.bestMove, Pieces.Rook, bestMove.initialRookId,boardCopy)
 
         clearMoveZones(boardCopy)
@@ -1914,7 +1852,6 @@ const Board = () => {
                 &&(!e.target.parentNode.className.includes(Pieces.MarkedRook))
                 &&(!whiteMoveFlag)
             ){
-                console.log(e.target.parentNode.className)
                 grabPiece({type: Pieces.Rook, posId: e.target.parentNode.id})
                 showWays(e.target.parentNode.id, boardCopy, tempFirstRookPosId, tempSecondRookPosId)
             }
@@ -1968,10 +1905,6 @@ const Board = () => {
     function test(e) {
         let boardCopy = []
         copyBoard(boardCopy)
-        //console.log("FR protected: "+ isRookProtected(firstRookPosId, boardCopy, firstRookPosId, secondRookPosId))
-        //console.log("FR eatable?: "+isThisRookEatebleNow(firstRookPosId,boardCopy,queenPosId,firstRookPosId,secondRookPosId))
-        //console.log("SR protected: "+ isRookProtected(secondRookPosId, boardCopy, firstRookPosId, secondRookPosId))
-        //console.log("SR eatable?: "+isThisRookEatebleNow(secondRookPosId,boardCopy,queenPosId,firstRookPosId,secondRookPosId))
         markRook(firstRookPosId, boardCopy)
         updateBoardFromCopy(boardCopy)
     }
@@ -2026,7 +1959,9 @@ const Board = () => {
                     <h1>RooksMoveCount: {rooksMoveCount}</h1>
                     <h1>{whiteMoveFlag ? "ход белых" : "ход чёрных"} </h1>
                     <button onClick={test}>TEST</button>
-                    {whiteMoveFlag ? <button onClick={bestQueenMoveBtnClick}>bestQueenMoveBtnClick</button> : <button onClick={bestRooksMoveBtnClick}>bestRooksMoveBtnClick</button>}
+                    {whiteMoveFlag
+                        ? <button onClick={bestQueenMoveBtnClick}>Сделать ход компьютера за ферзя</button>
+                        : <button onClick={bestRooksMoveBtnClick}>Сделать ход компьютера за ладью</button>}
                 </div>
                 {drawEndBlock()}
             </div>
@@ -2048,8 +1983,3 @@ const Board = () => {
 };
 
 export default Board;
-
-/*
-<button onClick={bestQueenMoveBtnClick}>bestQueenMoveBtnClick</button>
-                <button onClick={bestRooksMoveBtnClick}>bestRooksMoveBtnClick</button>
- */
