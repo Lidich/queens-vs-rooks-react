@@ -17,7 +17,7 @@ const Tile = (props) => {
     if (props.value === "queen")
         return (
             <div className={generateClassName()} style={{backgroundColor: props.color}} id={props.id}>
-                <img src='./img/queen.png' width={"60%"} height={"60%"} alt={""}/>
+                <img src='./queens-vs-rooks-react/img/queen.png' width={"60%"} height={"60%"} alt={""}/>
             </div>)
     if (props.value === "rook")
         return (
