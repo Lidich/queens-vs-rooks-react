@@ -1,6 +1,8 @@
 *{
     margin: 0;
     padding: 0;
+
+    font-family: "Comic Sans MS";
 }
 
 #root{
@@ -30,6 +32,10 @@
     height: 500px;
     background-color: aquamarine;
     border: 1px solid black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .board{
@@ -170,5 +176,69 @@
     //box-sizing: border-box;
     //border: 5px solid black;
 }
+
+.whiteMoveFlag{
+    text-align: center;
+    color: white;
+
+    width: 100%;
+
+    text-shadow: 1px 1px 1px darkgray, 2px 2px 1px darkgray;
+}
+
+.inGameBlock{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 60%;
+    justify-content: center;
+}
+
+.computerMoveBtn{
+    align-self: flex-end;
+}
+
+.endBlock{
+    text-align: center;
+}
+
+.moveCount{
+    font-size: 150%;
+}
+
+.obstaclesBlock{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+    background:linear-gradient(to bottom, #b8e356 5%, #a5cc52 100%);
+    background-color:#b8e356;
+    border-radius:6px;
+    border:1px solid #83c41a;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #86ae47;
+}
+.btn:hover {
+    background:linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
+    background-color:#a5cc52;
+}
+.btn:active {
+    position:relative;
+    top:1px;
+}
+
+
 
 

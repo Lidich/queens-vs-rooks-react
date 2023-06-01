@@ -118,7 +118,13 @@ const Board = () => {
 
     const chessBoardTemp = [];
 
+
+
     const boardIdMap = new Map();
+
+    const [resetGameFlag, setResetGameFlag] = useState(true)
+
+    const [inputText, setInputText] = useState("")
 
     const [whiteMoveFlag, setWhiteMoveFlag] = useState(true)
 
@@ -126,13 +132,128 @@ const Board = () => {
 
     const [rooksMoveCount, setRooksMoveCount] = useState(0)
 
-    const [chessBoard, editBoard] = useState(chessBoardTemp);
-
     const [queenPosId, setQueenPosId] = useState("e1")
 
     const [firstRookPosId, setFirstRookPosId] = useState('a8')
 
     const [secondRookPosId, setSecondRookPosId] = useState('h8')
+
+
+    for (let i = 0; i < 8; i++) {
+        // Loop through each column of the chess board
+        let k=i;
+        for (let j = 0; j < 8; j++) {
+            // Determine the color of the tile based on the row and column
+            const color = (i + j) % 2 === 0 ? 'light' : 'dark';
+
+            // Create the ID of the tile using the row and column numbers
+            const id = `${String.fromCharCode(97 + j)}${8 - i}`;
+
+            k=i*8+j;
+
+            boardIdMap.set(id, k);
+        }
+    }
+
+    function generateStartBorderArray(){
+        let startBorderArray = []
+
+        for (let i = 0; i < 8; i++) {
+            // Loop through each column of the chess board
+            let k=i;
+            for (let j = 0; j < 8; j++) {
+                // Determine the color of the tile based on the row and column
+                const color = (i + j) % 2 === 0 ? 'light' : 'dark';
+
+                // Create the ID of the tile using the row and column numbers
+                const id = `${String.fromCharCode(97 + j)}${8 - i}`;
+
+                k=i*8+j;
+
+                boardIdMap.set(id, k);
+
+                // Push the ID of the tile into the array
+                //Queen
+                if (id === queenPosId) {
+                    startBorderArray.push({id: id,
+                        content: Pieces.Queen,
+                        zones: {...Zones.None}
+                    })
+                    //chessBoardCopy.push({id: id, content: Pieces.Queen})
+                }
+                else {
+                    //Rooks
+                    if((id === "a8")||(id === "h8")) {
+                        startBorderArray.push({id: id,
+                            content: Pieces.Rook,
+                            zones: {...Zones.None}
+                        })
+                        //chessBoardCopy.push({id: id, content: Pieces.Rook})
+                    }
+                    else {
+                        //Obstacles
+                        startBorderArray.push({id: id,
+                            content: Pieces.None,
+                            zones: {...Zones.None}
+                        })
+                        //chessBoardCopy.push({id: id, content: "none"})
+                    }
+                }
+            }
+        }
+
+        return(startBorderArray)
+    }
+
+    function populateEmptyBoard(board){
+        for (let i = 0; i < 8; i++) {
+            // Loop through each column of the chess board
+            let k=i;
+            for (let j = 0; j < 8; j++) {
+                // Determine the color of the tile based on the row and column
+                const color = (i + j) % 2 === 0 ? 'light' : 'dark';
+
+                // Create the ID of the tile using the row and column numbers
+                const id = `${String.fromCharCode(97 + j)}${8 - i}`;
+
+                k=i*8+j;
+
+                boardIdMap.set(id, k);
+
+                // Push the ID of the tile into the array
+                //Queen
+                if (id === "e1") {
+                    board.push({id: id,
+                        content: Pieces.Queen,
+                        zones: {...Zones.None}
+                    })
+                    //chessBoardCopy.push({id: id, content: Pieces.Queen})
+                }
+                else {
+                    //Rooks
+                    if((id === "a8")||(id === "h8")) {
+                        board.push({id: id,
+                            content: Pieces.Rook,
+                            zones: {...Zones.None}
+                        })
+                        //chessBoardCopy.push({id: id, content: Pieces.Rook})
+                    }
+                    else {
+                        //Obstacles
+                        board.push({id: id,
+                            content: Pieces.None,
+                            zones: {...Zones.None}
+                        })
+                        //chessBoardCopy.push({id: id, content: "none"})
+                    }
+                }
+            }
+        }
+    }
+
+    const [chessBoard, editBoard] = useState(generateStartBorderArray)
+
+
 
     const [grabbedPiece, grabPiece] = useState({type: Pieces.None, posId: "none"});
 
@@ -142,7 +263,9 @@ const Board = () => {
     const [endGameFlag, setEndgameFlag] = useState(0)
 
     //number of obstacles
-    const n = 10
+    const [n, setNumberOfObstacles] = useState(25)
+
+    const [tempN, setTempN] = useState(n)
 
     class IdClass{
         id = ''
@@ -285,6 +408,9 @@ const Board = () => {
         }
     }
 
+
+
+    /*
     // Loop through each row of the chess board
     for (let i = 0; i < 8; i++) {
         // Loop through each column of the chess board
@@ -329,6 +455,7 @@ const Board = () => {
             }
         }
     }
+     */
 
     function copyBoard(board){
         if(board.length>2){
@@ -690,6 +817,8 @@ const Board = () => {
         let secondRooId = new IdClass(SRID)
 
         let res = false
+
+        if(rookId===Pieces.None) return (false)
 
         if(rookId===FRID){
             calcRookAttackZones(SRID, board)
@@ -1328,12 +1457,34 @@ const Board = () => {
         }
     }
 
+    function refreshPage() {
+        window.location.reload(false);
+    }
 
+    function resetGame(){
+        setResetGameFlag(!resetGameFlag)
+        return
+    }
 
     function drawEndBlock(){
-        if(endGameFlag===1) return(<div><img src='./img/queen.png' width={"40px"} height={"40px"} alt={""}/> pobeda {endGameFlag}</div>)
-        if(endGameFlag===2) return (<div><img src='./img/rook.png' width={"40px"} height={"40px"} alt={""}/> pobeda {endGameFlag}</div>)
-        else return (<div>nothing {endGameFlag}</div>)
+        if(endGameFlag===1) return(
+            <div className={"endBlock"}>
+                <img className={"endBlock-Image"} src='./img/queen.png' width={"40px"} height={"40px"} alt={""}/>
+                Победа ферзя
+                <br/>
+                <button className={"btn"} onClick={resetGame}>Начать новую игру</button>
+            </div>
+        )
+
+        if(endGameFlag===2) return(
+            <div className={"endBlock"}>
+                <img className={"endBlock-Image"} src='./img/rook.png' width={"40px"} height={"40px"} alt={""}/>
+                Победа ладей
+                <br/>
+                <button className={"btn"} onClick={resetGame}>Начать новую игру</button>
+            </div>
+        )
+        else return
     }
 
     function updateBoardFromCopy(board) {
@@ -1525,6 +1676,7 @@ const Board = () => {
     }
 
     function isThisRookEatebleNow(rookId, board, QID, FRID, SRID){
+        if(rookId===Pieces.None) return (true)
         let res = false
         if(rookId===FRID){
             if(isRookProtected(FRID, board, FRID, SRID)) res = false
@@ -1574,18 +1726,23 @@ const Board = () => {
         if((getQueenMoveZones(board, QID).length===0)
             &&(!isThisRookEatebleNow(FRID, board,QID,FRID,SRID))
             &&(!isThisRookEatebleNow(SRID, board,QID,FRID,SRID))
-        ) res = true
+        ) {
+            res = true
+        }
         return res
     }
 
     function checkWinCondition(board, QID, FRID, SRID){
-        if(didTheRooksWin(board, QID, FRID, SRID)){
-            return(2)
+        if(!whiteMoveFlag){
+            if(didTheRooksWin(board, QID, FRID, SRID)){
+                return(2)
+            }
+            if(queenMoveCount===15) return (1)
         }
         if(getRookAttackZones(board).length===0) return (1)
-        if(queenMoveCount===15) return (1)
-        if(rooksMoveCount===15) return (1)
+        if((!whiteMoveFlag)&&(rooksMoveCount===15))return (1)
         if((FRID===Pieces.None)&&(SRID===Pieces.None)) return (1)
+        if((whiteMoveFlag)&&(queenMoveCount===15)) return (1)
         return (0)
     }
 
@@ -1736,7 +1893,7 @@ const Board = () => {
 
         if((bestQueenMove.bestMove===Pieces.None)&&(queenWays.length>0)) bestQueenMove.bestMove=queenWays[0]
         else {
-            console.log("ходов для ферзя нет")
+            console.log("ходов для ферзя нет: bestQueenMoveBtnClick")
             setEndgameFlag(2)
             return
         }
@@ -1776,7 +1933,7 @@ const Board = () => {
         setSecondRookPosId(SRID)
         setQueenMoveCount(queenMoveCount+1)
         setWhiteMoveFlag(!whiteMoveFlag)
-        setEndgameFlag(checkWinCondition(boardCopy, QID, FRID, SRID))
+        setEndgameFlag(checkWinCondition(boardCopy, bestQueenMove.bestMove, FRID, SRID))
         updateBoardFromCopy(boardCopy)
     }
 
@@ -1811,6 +1968,17 @@ const Board = () => {
         updateBoardFromCopy(boardCopy)
     }
 
+    function inputChanged(e){
+        if(e.target.value>=30) e.target.value = 30
+        if(e.target.value<=10) e.target.value = 10
+        setInputText(e.target.value)
+    }
+
+    function changeNumberBtnClick(e){
+        setTempN(inputText)
+        setResetGameFlag(!resetGameFlag)
+    }
+
     function boardClick(e) {
         if(endGameFlag>0) return;
 
@@ -1832,7 +2000,6 @@ const Board = () => {
         clearRookWays(boardCopy)
         if(tempFirstRookPosId!==Pieces.None) calcRookAttackZones(tempFirstRookPosId, boardCopy)
         if(tempSecondRookPosId!==Pieces.None) calcRookAttackZones(tempSecondRookPosId, boardCopy)
-
 
         if ((e.target.tagName === "IMG")&&
             (!e.target.parentNode.className.includes(Pieces.Dot)
@@ -1890,9 +2057,9 @@ const Board = () => {
 
                 calcAllZones(boardCopy, tempQueenPosId, tempFirstRookPosId, tempSecondRookPosId)
 
-
-                setEndgameFlag(checkWinCondition(boardCopy,tempQueenPosId,tempFirstRookPosId,tempSecondRookPosId))
                 setWhiteMoveFlag(!whiteMoveFlag)
+                setEndgameFlag(checkWinCondition(boardCopy,tempQueenPosId,tempFirstRookPosId,tempSecondRookPosId))
+
                 grabPiece({type: Pieces.None, posId: "none"})
                 setQueenPosId(tempQueenPosId)
                 setFirstRookPosId(tempFirstRookPosId)
@@ -1905,25 +2072,45 @@ const Board = () => {
     function test(e) {
         let boardCopy = []
         copyBoard(boardCopy)
-        markRook(firstRookPosId, boardCopy)
+        console.log(boardCopy)
         updateBoardFromCopy(boardCopy)
     }
 
     useEffect(() =>{
         let boardCopy = []
-        copyBoard(boardCopy)
+
+        let startArray = []
+
+        let QID = "e1"
+        let FRID = "a8"
+        let SRID = "h8"
+
+        populateEmptyBoard(startArray)
+        copyBoardFrom(boardCopy, startArray)
 
         while (true){
-            placeObstacles(n, boardCopy)
-            calcRookAttackZones(firstRookPosId, boardCopy)
-            calcRookAttackZones(secondRookPosId, boardCopy)
-            calcAllZones(boardCopy, queenPosId, firstRookPosId, secondRookPosId)
-            if(areWaysBetweenPiecesConsist(boardCopy, queenPosId, firstRookPosId, secondRookPosId)) break
-            else copyBoard(boardCopy)
+            if(tempN===n)placeObstacles(n, boardCopy)
+            else {
+                placeObstacles(tempN, boardCopy)
+                setNumberOfObstacles(tempN)
+            }
+            calcRookAttackZones(FRID, boardCopy)
+            calcRookAttackZones(SRID, boardCopy)
+            calcAllZones(boardCopy, QID, FRID, SRID)
+            if(areWaysBetweenPiecesConsist(boardCopy, QID, FRID, SRID)) break
+            else copyBoardFrom(boardCopy, startArray)
+            //else copyBoard(boardCopy)
         }
 
+        setRooksMoveCount(0)
+        setQueenMoveCount(0)
+        setEndgameFlag(0)
+        setWhiteMoveFlag(true)
+        setQueenPosId(QID)
+        setFirstRookPosId(FRID)
+        setSecondRookPosId(SRID)
         updateBoardFromCopy(boardCopy)
-    }, [])
+    }, [resetGameFlag])
 
     return (
         <div className={"boardComponent"}>
@@ -1953,17 +2140,26 @@ const Board = () => {
             </div>
             <div className={"testing"} >
                 <div className={"inGameBlock"+" whiteMoveFlagIS"+endGameFlag}>
-                    <h1>QueenPosId: {queenPosId}</h1>
-                    <h1>GrabbedPieceType: {grabbedPiece.type} GrabbedPiecePosId: {grabbedPiece.posId}</h1>
-                    <h1>QueenMoveCount: {queenMoveCount}</h1>
-                    <h1>RooksMoveCount: {rooksMoveCount}</h1>
-                    <h1>{whiteMoveFlag ? "ход белых" : "ход чёрных"} </h1>
-                    <button onClick={test}>TEST</button>
-                    {whiteMoveFlag
-                        ? <button onClick={bestQueenMoveBtnClick}>Сделать ход компьютера за ферзя</button>
-                        : <button onClick={bestRooksMoveBtnClick}>Сделать ход компьютера за ладью</button>}
+                    <h1 className={"whiteMoveFlag"}>{whiteMoveFlag ? "ход белых" : "ход чёрных"} </h1>
+                    <h1 className={"moveCount"}>Количество ходов ферзя: {queenMoveCount}</h1>
+                    <h1 className={"moveCount"}>Количество ходов ладей: {rooksMoveCount}</h1>
+
+
+                    {
+                        whiteMoveFlag
+                        ? <button className={"computerMoveBtn btn"} onClick={bestQueenMoveBtnClick}>Сделать ход компьютера за ферзя</button>
+                        : <button className={"computerMoveBtn btn"} onClick={bestRooksMoveBtnClick}>Сделать ход компьютера за ладью</button>
+                    }
+
+                    <div className={"obstaclesBlock"}>
+                        <h3>Количество препятствий: {n}</h3>
+                        <div><button onClick={changeNumberBtnClick} className={"btn"}>Изменить</button>
+                            <input placeholder={tempN} type={"number"} min={"10"} max={"30"} onChange={inputChanged}/></div>
+                    </div>
+
                 </div>
                 {drawEndBlock()}
+
             </div>
 
             <div className={"board-bottom-corner"}>1</div>
@@ -1983,3 +2179,12 @@ const Board = () => {
 };
 
 export default Board;
+
+
+//TESTING RENDER BLOCK
+/*
+<h1>QueenPosId: {queenPosId}</h1>
+<h1>GrabbedPieceType: {grabbedPiece.type} GrabbedPiecePosId: {grabbedPiece.posId}</h1>
+<button onClick={test}>TEST</button>
+
+ */
