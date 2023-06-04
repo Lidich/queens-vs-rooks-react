@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/queens-vs-rooks-react/static/css/main.555a8429.css",
-    "main.js": "/queens-vs-rooks-react/static/js/main.8d880413.js",
+    "main.css": "/queens-vs-rooks-react/static/css/main.59176bde.css",
+    "main.js": "/queens-vs-rooks-react/static/js/main.a6bdaa62.js",
     "static/media/backImage1.jpg": "/queens-vs-rooks-react/static/media/backImage1.39d2f5c3a6f9d37e0fec.jpg",
     "index.html": "/queens-vs-rooks-react/index.html",
-    "main.555a8429.css.map": "/queens-vs-rooks-react/static/css/main.555a8429.css.map",
-    "main.8d880413.js.map": "/queens-vs-rooks-react/static/js/main.8d880413.js.map"
+    "main.59176bde.css.map": "/queens-vs-rooks-react/static/css/main.59176bde.css.map",
+    "main.a6bdaa62.js.map": "/queens-vs-rooks-react/static/js/main.a6bdaa62.js.map"
   },
   "entrypoints": [
-    "static/css/main.555a8429.css",
-    "static/js/main.8d880413.js"
+    "static/css/main.59176bde.css",
+    "static/js/main.a6bdaa62.js"
   ]
 }
