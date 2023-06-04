@@ -214,6 +214,24 @@
     align-items: center;
 }
 
+.startGameConfig{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+
+    width: 800px;
+    height: 800px;
+
+    background-color: aquamarine;
+
+    box-sizing: border-box;
+    border: 5px solid transparent;
+//border-tope: none;
+    border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+    border-image-slice: 1;
+}
+
 .btn {
     box-shadow:inset 0px 1px 0px 0px #d9fbbe;
     background:linear-gradient(to bottom, #b8e356 5%, #a5cc52 100%);
@@ -239,6 +257,63 @@
     top:1px;
 }
 
+select {
+    border-radius: 15px;
+    background: #73AD21;
+    margin-left: 3px;
+    width: 270px;
+    height: 30px;
+
+    box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+    background:linear-gradient(to bottom, #b8e356 5%, #a5cc52 100%);
+    background-color:#b8e356;
+    color:#ffffff;
+    font-family:Arial;
+    font-weight: bold;
+    font-size: 80%;
+}
+
+.computer-human-select{
+    width: 100px;
+}
+
+input{
+    border-radius: 15px;
+    background: #73AD21;
+    height: 30px;
+
+    width: 33px;
+
+    text-align: center;
+
+    box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+    background:linear-gradient(to bottom, #b8e356 5%, #a5cc52 100%);
+    background-color:#b8e356;
+    color:#ffffff;
+}
+
+
+.startGameConfig-settings{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 300px;
+    width: 550px;
+
+
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid white;
+}
 
 
 
+.startGameConfig-title{
+    color: white;
+    text-shadow: 1px 1px 1px darkgray, 2px 2px 1px darkgray
+}
+
+.startGameConfig-startBtn{
+    width: 200px;
+    height: 55px;
+}
